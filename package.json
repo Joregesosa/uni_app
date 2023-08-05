@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  },
+  "scripts": {
+    "tailwind": "npx tailwindcss -i input.css -o src/output.css --watch"
+  },
+  "dependencies": {
+    "datatables.net-dt": "^1.13.6"
+  }
+}
