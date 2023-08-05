@@ -3,7 +3,7 @@
 require_once   "./App/models/DataBase.php";
 class User
 {
-    public $conn;
+    private $conn;
 
     function getConn()
     {

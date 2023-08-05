@@ -24,10 +24,6 @@
 
         ?>
 
-
-
-
-
      <form action="?controller=SessionController&&action=login" method="POST" class="flex flex-col gap-8 mx-auto py-8">
 
          <div class="flex border h-12 p-2 items-center rounded-md shadow-md shadow-cyan-950">

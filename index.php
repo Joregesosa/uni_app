@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$data = array(); // alamacenar los datos  from server
 require_once __DIR__ . "/App/views/components/header.php";
 
 require __DIR__ . "/config/config.php";
@@ -15,7 +15,7 @@ if (isset($_GET['action'])) :
 
   $action = $_GET['action'];
 
-  $usuario->$action($_POST);
+  $data =  $usuario->$action($_POST);
 
 endif;
 
@@ -36,7 +36,7 @@ else :
   require_once __DIR__ . "/App/views/components/top_nav.php";
   require_once __DIR__ . "/App/views/components/user_menu.php";
   require_once __DIR__ . "/App/views/$view.php";
-  require_once __DIR__ . "/App/views/profile.php";
+  // require_once __DIR__ . "/App/views/profile.php";
 
 endif;
 

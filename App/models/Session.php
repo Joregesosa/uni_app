@@ -4,7 +4,7 @@ require_once   "./App/models/DataBase.php";
 class Session
 {
 
-    public $conn;
+    private $conn;
 
     function getConn()
     {

@@ -5,11 +5,12 @@ class SessionController
 {
 
     public $view;
-
+    public $title;
     // public $action;
 
     function __construct()
     {
+        $this->title = 'DashBoard';
         $this->view = 'login';
         $this->user = new Session;
     }
