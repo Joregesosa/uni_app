@@ -9,12 +9,10 @@
             <thead class="h-12 ">
                 <tr>
                     <th>#</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Direccion</th>
-                    <th>Fec. de Nacimiento</th>
-                    <th>Clase Asignada</th>
-                    <th>Acciones</th>
+                    <th>Email/Usuario</th>
+                    <th>Permiso</th>
+                    <th>Estado</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,13 +20,10 @@
                 <?php foreach ($data as $key => $row) : ?>
                     <tr>
 
-
                         <td><?= $key + 1 ?></td>
-                        <td><?= $row['first_name'] . $row['last_name'] ?></td>
                         <td><?= $row['email'] ?></td>
-                        <td><?= $row['address'] ?></td>
-                        <td><?= $row['birthday'] ?></td>
-                        <td><?= $row['subject'] ? $row['subject'] : '<span class="flex bg-yellow-500 px-2 py-[2px] text-cyan-900 w-fit rounded-md font-medium">sin asignar</span>' ?></td>
+                        <td><?= role($row['role_id']) ?></td>
+                        <td><?= state($row['state']) ?></td>
 
 
                         <td>
@@ -39,6 +34,7 @@
 
                             </a>
                         </td>
+
                     </tr>
                 <?php endforeach; ?>
 
@@ -53,3 +49,36 @@
 
 </div>
 </div>
+
+<?php
+
+function role($role)
+{
+    switch ($role) {
+
+        case 1:
+            return '<span class="flex bg-yellow-500 px-2 py-[2px] text-cyan-900 text-sm w-fit rounded-md font-medium">Admin</span>';
+            break;
+        case 2:
+            return '<span class="flex bg-cyan-600 px-2 py-[2px] text-gray-50 text-sm w-fit rounded-md font-medium">Maestro</span>';
+            break;
+
+        default:
+            return '<span class="flex bg-gray-700 px-2 py-[2px] text-gray-50text-sm  w-fit rounded-md font-medium">Alumno</span>';
+            break;
+    }
+}
+
+function state($state)
+{
+    switch ($state) {
+
+        case 1:
+            return '<span class="flex bg-green-600 px-1 py-[2px] text-gray-50 w-fit rounded-md font-medium text-sm">Activo</span>';
+            break;
+
+        default:
+            return '<span class="flex bg-red-600 px-1 py-[2px] text-gray-50 w-fit rounded-md font-medium text-sm">Inactivo</span>';
+            break;
+    }
+}

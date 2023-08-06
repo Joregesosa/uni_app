@@ -6,5 +6,21 @@ define('PORT', 3306);
 define('DB_USER', "root");
 define('DB_PASS', "tupassword");
 
-define('DEFAULT_CONTROLLER', "SessionController");
-define('DEFAULT_ACTION', "");
+$defaultController = "SessionController";
+
+if (isset($_SESSION['user'])):
+    
+    switch ($_SESSION['user']['role_id']):
+
+        case 1:
+            $defoultController = "AdminController";
+            break;
+
+        default:
+            $defoultController = "SessionController";
+            break;
+
+    endswitch;
+endif;
+
+// define('DEFAULT_ACTION', "login");

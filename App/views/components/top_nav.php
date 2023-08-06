@@ -8,7 +8,7 @@
 
             </span>
 
-            <span><?= $first_name . ' ' . $last_name ?></span>
+            <span><?= $_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name'] ?></span>
 
             <span id="arrow" class="w-5 h-5 rotate-180">
 
@@ -22,6 +22,6 @@
     </nav>
     <div class="w-full h-16 flex items-center px-8 justify-between ">
 
-        <h3 class="text-xl font-medium"><?= $usuario->title ?></h3>
+        <h3 class="text-xl font-medium"><?= $ctrl->title ?></h3>
         <h3 class="text-base text-cyan-600">HOME/PERMISOS</h3>
     </div>

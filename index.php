@@ -1,43 +1,55 @@
 <?php
 session_start();
-$data = array(); // alamacenar los datos  from server
-require_once __DIR__ . "/App/views/components/header.php";
+
+$data = array();
 
 require __DIR__ . "/config/config.php";
 
-isset($_GET['controller']) ? $controller = $_GET['controller'] : $controller = constant('DEFAULT_CONTROLLER');
+require_once __DIR__ . "/App/views/components/header.php";
 
-require   __DIR__ . "/App/controller/$controller.php";
+$path = __DIR__ . "/App/controller/";
 
-$usuario = new $controller;
+if (isset($_SESSION['user'])) :
 
-if (isset($_GET['action'])) :
+  if (isset($_GET['controller']) && file_exists($path . $_GET['controller'] . '.php')) :
+    $controller = $_GET['controller'];
+  else :
+    $controller = $defoultController;
+  endif;
 
-  $action = $_GET['action'];
 
-  $data =  $usuario->$action($_POST);
+  require_once   __DIR__ . "/App/controller/$controller.php";
 
-endif;
+  $ctrl = new $controller;
 
-unset($_GET['controller']);
+  if (isset($_GET['action']) && method_exists($ctrl, $_GET['action'])) :
+    $action = $_GET['action'];
 
-if (!isset($_SESSION['user'])) :
+    $data = $ctrl->$action();
 
-  // $usuario->update(); mas tarde agregar random img
-
-  require_once __DIR__ . "/App/views/$usuario->view.php";
-
-else :
-  extract($_SESSION['user']);
-
-  $view = $usuario->view === 'login' ? $view = 'dashboard' : $usuario->view;
-
+  endif;
+  
   require_once __DIR__ . "/App/views/components/side_nav.php";
   require_once __DIR__ . "/App/views/components/top_nav.php";
   require_once __DIR__ . "/App/views/components/user_menu.php";
-  require_once __DIR__ . "/App/views/$view.php";
-  // require_once __DIR__ . "/App/views/profile.php";
+  require_once __DIR__ . "/App/views/$ctrl->view.php";
+
+else :
+
+  require_once __DIR__ . "/App/views/login.php";
+
+  require   __DIR__ . "/App/controller/SessionController.php";
+
+  $session = new SessionController;
+
+  if (isset($_POST['email']) && isset($_POST['pass'])) {
+
+    $session->login($_POST);
+  }
 
 endif;
 
 require_once __DIR__ . "/App/views/components/footer.php";
+
+
+ 

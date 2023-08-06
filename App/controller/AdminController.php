@@ -1,6 +1,7 @@
 <?php
 require_once "./App/models/Admin.php";
 
+
 class AdminController
 {
     public $title;
@@ -13,6 +14,7 @@ class AdminController
         $this->view = 'dashboard';
         $this->title = 'DashBoard';
         $this->admin = new Admin;
+
     }
 
     function list_teachers()
@@ -61,9 +63,10 @@ class AdminController
     {
         if ($_SESSION['user']['role_id'] === 1) :
 
-            $teachers = $this->admin->list('SELECT * FROM admin_subject_table');
+            $teachers = $this->admin->list('SELECT * FROM admin_role_table');
 
             $this->title = 'Lista de Permisos';
+            
             $this->view = 'admin_list_roles';
 
             return $teachers;

@@ -5,13 +5,12 @@ class SessionController
 {
 
     public $view;
-    public $title;
-    // public $action;
+    private $user;
 
     function __construct()
     {
-        $this->title = 'DashBoard';
         $this->view = 'login';
+
         $this->user = new Session;
     }
 
@@ -27,31 +26,29 @@ class SessionController
 
             if ($passVerify) :
 
-                unset($_GET['action']);
-                unset($_GET['controller']);
                 $_SESSION['user'] = $res;
+                header('Location: index.php');
 
-                header('location: index.php');
             else :
 
-                header('location: index.php');
-                $_SESSION['invalidCredentials'] = 'wrong email or password';
 
+                $_SESSION['invalidCredentials'] = 'wrong email or password';
+                $this->view = 'login';
+                header('Location: index.php');
             endif;
 
         else :
 
-            header('location: index.php');
+            $this->view = 'login';
             $_SESSION['invalidCredentials'] = 'wrong email or password';
+            header('Location: index.php');
         endif;
     }
 
     function logout()
     {
         session_destroy();
-        header('location: index.php');
+
+        header("Refresh:0");
     }
-    // function update(){
-    //     $this->user->changePassword();
-    // }
 }

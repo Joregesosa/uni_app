@@ -1,3 +1,5 @@
+
+ 
  <div class="flex flex-col w-[420px] h-[512px] shadow-lg rounded-xl border m-auto shadow-cyan-800 p-10 bg-gray-50">
 
      <div class="flex text-cyan-600 text-6xl items-center gap-4 w-fit mx-auto py-6">
@@ -15,7 +17,7 @@
 
              <?= $_SESSION['invalidCredentials'] ?>
 
-        </span>
+         </span>
 
      <?php
 
@@ -55,5 +57,3 @@
      </form>
 
  </div>
-
-  
