@@ -39,24 +39,4 @@ class Session
             echo $e->getMessage();
         }
     }
-
-
-    // function changePassword()
-    // {
-    //     $this->getConn();
-
-    //     try {
-
-    //         $stm = $this->conn->prepare("UPDATE users set `pass`=? WHERE `id`=?");
-
-    //         for ($i=0; $i < 30; $i++) { 
-    //            $hash = password_hash('123456', PASSWORD_DEFAULT);
-    //             $stm->execute([$hash, $i]);
-    //         }
-
-    //         $this->conn = null;
-    //     } catch (PDOException $e) {
-    //         echo $e->getMessage();
-    //     }
-    // }
 }

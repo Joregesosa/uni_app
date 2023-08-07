@@ -5,7 +5,6 @@ require_once   "./App/models/DataBase.php";
 class Admin
 {
     private $conn;
-
     public function __construct()
     {
         $database = new DataBase;
@@ -25,8 +24,24 @@ class Admin
 
                 $teachers[] = $res;
             }
-             
+
             return $teachers;
+
+            $this->conn = null;
+        } catch (PDOException $e) {
+
+            echo $e->getMessage();
+        }
+    }
+
+    function Edit($query, $params)
+    {
+
+        try {
+
+            $stm = $this->conn->prepare($query);
+
+            $stm->execute($params);
 
             $this->conn = null;
         } catch (PDOException $e) {
