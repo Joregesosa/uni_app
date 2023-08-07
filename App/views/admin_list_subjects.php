@@ -1,9 +1,14 @@
  <div class=" w-[90%] mx-auto border-1 border-cyan-300 bg-slate-100 rounded-lg">
+     <div class="flex w-full border-b border-cyan-300 px-4 items-center justify-between">
+         <h4 class="w-fit   py-3 text-lg font-medium">
+             Informacion de Clases
+         </h4>
 
-     <h4 class="w-full border-b border-cyan-300 px-4 py-3 text-lg font-medium">
-         Informacion de Clases
-     </h4>
+         <a href="?controller=AdminController&action=list_subjects&modal=admin_create_subject&modal_act=without_subjects" class=":hoverbg-blue-400 bg-blue-500 text-cyan-100 flex font-medium px-3 py-2 rounded-lg hover:text-cyan-800">
+             agregar clase
+         </a>
 
+     </div>
      <div class="p-4">
          <table id="example" class="table table-striped">
              <thead class="h-12 ">

@@ -122,10 +122,84 @@ class AdminController
     {
         if ($_SESSION['user']['role_id'] === 1) :
 
-            $teachers = $this->admin->list('SELECT * FROM teachers_availables');
+            $teacher = $_POST['teacher'] ? $_POST['teacher'] : NULL;
+
+            $params = [$_POST['subject'], $teacher];
+
+            $query = "INSERT INTO subjects (`subject`, `teacher_id`) VALUES (?,?)";
+
+            $this->admin->Edit($query, $params);
+
+            header('location: ?controller=AdminController&action=list_subjects');
+
+        endif;
+    }
+
+    function without_teacher()
+    {
+        if ($_SESSION['user']['role_id'] === 1) :
+
+            $teachers = $this->admin->list('SELECT * FROM subjects 
+            WHERE teacher_id is NULL');
 
             return $teachers;
 
         endif;
     }
+
+    function create_teacher()
+    {
+        if ($_SESSION['user']['role_id'] === 1) :
+
+            $hash = password_hash('123456', PASSWORD_DEFAULT);
+
+
+            $subjec_id = $_POST['subject'] ? $_POST['subject'] : null;
+            $params = [
+                $_POST['email'],
+                $hash,
+                $_POST['first_name'],
+                $_POST['last_name'],
+                $_POST['address'],
+                $_POST['birthday'],
+                $subjec_id
+            ];
+
+            $query = "CALL new_teacher(?,?,?,?,?,?,?)";
+
+            $this->admin->Edit($query, $params);
+
+            header('location: ?controller=AdminController&action=list_teachers');
+
+        endif;
+    }
+
+    function edit_teacher()
+    {
+        if ($_SESSION['user']['role_id'] === 1) :
+
+
+            $teacher_id = $_GET['id'];
+
+            $subjec_id = $_POST['subject'] ? $_POST['subject'] : null;
+            $params = [
+                $_POST['email'],
+                $teacher_id,
+                $_POST['first_name'],
+                $_POST['last_name'],
+                $_POST['address'],
+                $_POST['birthday'],
+                $subjec_id
+            ];
+
+            $query = "CALL edit_teacher(?,?,?,?,?,?,?)";
+
+            $this->admin->Edit($query, $params);
+
+            header('location: ?controller=AdminController&action=list_teachers');
+
+        endif;
+    }
+
+    
 }

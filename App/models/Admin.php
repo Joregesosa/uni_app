@@ -13,7 +13,7 @@ class Admin
 
     function List($query)
     {
-
+        $teachers = array();
         try {
 
             $stm = $this->conn->prepare($query);
