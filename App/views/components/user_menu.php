@@ -2,7 +2,7 @@
 
     <ul class="flex flex-col p-3 gap-3 text-lg">
 
-        <a href="">
+        <a href="?controller=UserController">
             <li class="flex w-full h-fit gap-6 hover:shadow-md shadow-cyan-800 p-2 rounded-lg">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -14,7 +14,7 @@
             </li>
         </a>
 
-        <a href="?controller=SessionController&&action=logout">
+        <a href="?controller=SessionController&action=logout">
 
             <li class="flex w-full h-fit gap-6 hover:shadow-md shadow-cyan-800 p-2 rounded-lg">
 

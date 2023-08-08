@@ -5,22 +5,45 @@ require_once "./App/models/User.php";
 class UserController
 {
     public $view;
+    private $user;
+    public $title;
 
     function __construct()
     {
-        $this->view = 'login';
+        $this->title = 'User Profile';
+        $this->view = 'profile';
         $this->user = new User;
     }
 
-    function  create($values)
+    function  edit_profile()
     {
-        // $user = new User;
-        $this->user->create_user($values['email'], $values['name'], $values['pass']);
+        if ($_SESSION['user']['role_id'] === 1) :
 
-        $this->view = 'registro_exitoso';
+            $dni = isset($_POST['dni']) ? $_POST['dni'] : '';
+            $user_id = $_SESSION['user']['id'];
+            $hash =  $_POST['pass'] ? password_hash($_POST['pass'], PASSWORD_DEFAULT) : '';
+
+            $birthday = $_POST['birthday'] ? $_POST['birthday'] : null;
+
+            $params = [
+                $dni,
+                $_POST['email'],
+                $hash,
+                $_POST['first_name'],
+                $_POST['last_name'],
+                $_POST['address'],
+                $birthday,
+                $user_id
+            ];
+
+            $query = "CALL edit_profile(?,?,?,?,?,?,?,?)";
+
+            $res =  $this->user->Edit($query, $params);
+            
+                
+
+              $_SESSION['user'] = $res;
+
+        endif;
     }
-
-
-
-   
 }

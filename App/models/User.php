@@ -5,22 +5,32 @@ class User
 {
     private $conn;
 
-    function getConn()
+    function __construct()
     {
         $database = new DataBase;
         $this->conn = $database->conn;
     }
 
 
-    function create_user($email, $name, $pass)
+    function Edit($query, $params)
     {
-        $this->getConn();
 
         try {
 
-            $stm = $this->conn->prepare("INSERT INTO `users`(`email`,`name`, `pass`) VALUE(?,?,?)");
+            $stm = $this->conn->prepare($query);
 
-            $stm->execute([$email, $name, $pass]);
+            $stm->execute($params);
+
+            $rowCounter = $stm->rowCount();
+
+            $res = $stm->fetch(PDO::FETCH_ASSOC);
+
+
+            if ($rowCounter === 1) :
+
+                return $res;
+
+            endif;
 
             $this->conn = null;
         } catch (PDOException $e) {
@@ -28,7 +38,4 @@ class User
             echo $e->getMessage();
         }
     }
-
-
-   
 }

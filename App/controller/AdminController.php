@@ -43,7 +43,7 @@ class AdminController
 
         endif;
     }
-
+    
     function list_subjects()
     {
         if ($_SESSION['user']['role_id'] === 1) :
@@ -153,7 +153,7 @@ class AdminController
 
             $hash = password_hash('123456', PASSWORD_DEFAULT);
 
-
+            $birthday = $_POST['birthday'] ? $_POST['birthday'] : null;
             $subjec_id = $_POST['subject'] ? $_POST['subject'] : null;
             $params = [
                 $_POST['email'],
@@ -161,7 +161,7 @@ class AdminController
                 $_POST['first_name'],
                 $_POST['last_name'],
                 $_POST['address'],
-                $_POST['birthday'],
+                $birthday,
                 $subjec_id
             ];
 
@@ -181,14 +181,17 @@ class AdminController
 
             $teacher_id = $_GET['id'];
 
+            $birthday = $_POST['birthday'] ? $_POST['birthday'] : null;
+
             $subjec_id = $_POST['subject'] ? $_POST['subject'] : null;
+
             $params = [
                 $_POST['email'],
                 $teacher_id,
                 $_POST['first_name'],
                 $_POST['last_name'],
                 $_POST['address'],
-                $_POST['birthday'],
+                $birthday,
                 $subjec_id
             ];
 
@@ -201,5 +204,57 @@ class AdminController
         endif;
     }
 
-    
+    function create_student()
+    {
+        if ($_SESSION['user']['role_id'] === 1) :
+
+
+
+            $hash = password_hash('123456', PASSWORD_DEFAULT);
+            $birthday = $_POST['birthday'] ? $_POST['birthday'] : null;
+            $params = [
+                $_POST['dni'],
+                $_POST['email'],
+                $hash,
+                $_POST['first_name'],
+                $_POST['last_name'],
+                $_POST['address'],
+                $birthday
+            ];
+
+            $query = "CALL new_student(?,?,?,?,?,?,?)";
+
+            $this->admin->Edit($query, $params);
+
+            header('location: ?controller=AdminController&action=list_students');
+
+        endif;
+    }
+
+    function edit_student()
+    {
+        if ($_SESSION['user']['role_id'] === 1) :
+
+
+            $student_id = $_GET['id'];
+
+            $birthday = $_POST['birthday'] ? $_POST['birthday'] : null;
+            $params = [
+                $_POST['dni'],
+                $_POST['email'],
+                $_POST['first_name'],
+                $_POST['last_name'],
+                $_POST['address'],
+                $birthday,
+                $student_id
+            ];
+
+            $query = "CALL edit_student(?,?,?,?,?,?,?)";
+
+            $this->admin->Edit($query, $params);
+
+            header('location: ?controller=AdminController&action=list_students');
+
+        endif;
+    }
 }
