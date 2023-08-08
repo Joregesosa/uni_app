@@ -40,22 +40,44 @@ class TeacherController
 
             $this->admin->Edit($query, $params);
 
-            header('location: ?controller=UserController&action=list_students');
+            header('location: ?controller=teacherController&action=list_students');
 
         endif;
     }
 
     function list_messages()
     {
-        if ($_SESSION['user']['role_id'] === 2) :
+        if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
 
             $id = $_GET['record'];
 
-            $query = "SELECT * from messages WHERE subject_record_id = $id";
+            $query = "SELECT * from messages WHERE subject_record_id=$id";
 
-            $this->admin->List($query);
+            $res = $this->admin->List($query);
 
-            header('location: ?controller=TeacherController&action=list_students');
+            return $res;
+
+        endif;
+    }
+
+    function send_message()
+    {
+        if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
+
+            $id = $_GET['record'];
+            $row = $_GET['row'];
+            $sender = $_SESSION['user']['id'];
+
+            $params = [$_POST['message'], $id, $sender];
+
+            $query = "INSERT INTO messages (`message`, `subject_record_id`, `sender`) Values (?,?,?)";
+
+            $this->admin->Edit($query, $params);
+
+
+
+        header("location: ?controller=TeacherController&action=list_students&modal=messages&modal_act=list_messages&row=$row&record=$id");
+        
 
         endif;
     }

@@ -17,7 +17,7 @@ class UserController
 
     function  edit_profile()
     {
-        if ($_SESSION['user']['role_id'] === 1) :
+        if (isset($_SESSION['user'])) :
 
             $dni = isset($_POST['dni']) ? $_POST['dni'] : '';
             $user_id = $_SESSION['user']['id'];
@@ -39,10 +39,8 @@ class UserController
             $query = "CALL edit_profile(?,?,?,?,?,?,?,?)";
 
             $res =  $this->user->Edit($query, $params);
-            
-                
 
-              $_SESSION['user'] = $res;
+            $_SESSION['user'] = $res;
 
         endif;
     }

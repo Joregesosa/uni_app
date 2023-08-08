@@ -17,20 +17,44 @@
                 Mensajes
 
             </div>
-            <ul class="flex flex-col w-full h-[420px] overflow-y-scroll bg-gray-900">
-                <li class="flex flex-col bg-gray-100 w-3/4 m-3 p-2 rounded-2xl self-end">
-                    <span class="text-[10px]">tu - 12/07/23</span>
-                    <p class="text-xs mt-1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam, voluptas.</p>
-                </li>
-                <li class="flex flex-col bg-gray-100 w-3/4 m-2 p-2 rounded-2xl self-start">
-                    <span class="text-[10px]">name - 12/07/23</span>
-                    <p class="text-xs mt-1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam, voluptas.</p>
-                </li>
+
+            <ul class="flex flex-col w-full h-[420px] overflow-y-scroll bg-gray-800">
+                <?php
+                foreach ($modal_data as $message) :
+                    if ($message['sender'] === $_SESSION['user']['id']) :
+                ?>
+
+
+                        <li class="flex flex-col bg-gray-100 w-3/4 m-3 p-2 rounded-2xl self-start">
+                            <span class="text-[10px] font-medium">tu -
+                                <?= $message['send_date'] ?>
+                            </span>
+                            <p class="text-sm mt-1"><?= $message['message'] ?></p>
+                        </li>
+
+                    <?php
+                    else :
+                        $row = $_GET['row'];
+                    ?>
+
+
+                        <li class="flex flex-col bg-gray-100 w-3/4 m-3 p-2 rounded-2xl self-end">
+                            <span class="text-[10px] font-medium">
+                                <?= $data[$row]['name'] ?> -
+                                <?= $message['send_date'] ?>
+                            </span>
+                            <p class="text-sm mt-1"><?= $message['message'] ?></p>
+                        </li>
+
+                <?php
+                    endif;
+                endforeach;
+                ?>
+
             </ul>
 
-            
 
-            <form action="" method="POST" class="flex flex-col gap-6 mx-auto py-6 h-fit w-full">
+            <form action="?controller=TeacherController&action=list_students&modal=messages&modal_act=send_message&row=<?= $_GET['row'] ?>&record=<?= $_GET['record'] ?>" method="POST" class="flex flex-col gap-6 mx-auto py-6 h-fit w-full">
 
                 <div>
 
@@ -43,7 +67,7 @@
                 <div class="flex w-full justify-end">
                     <a href="?controller=TeacherController&action=list_students" class="shadow-md shadow-cyan-950 bg-cyan-500 rounded-md text-gray-700 text-lg font-medium hover:text-gray-50 mx-auto px-8 py-2">Cancelar</a>
 
-                    <button type="submit" class="shadow-md shadow-cyan-950 bg-cyan-600    rounded-md hover:text-gray-300 text-lg font-medium text-gray-50 mx-auto px-8 py-1">Guardar</button>
+                    <button type="submit" class="shadow-md shadow-cyan-950 bg-cyan-600    rounded-md hover:text-gray-300 text-lg font-medium text-gray-50 mx-auto px-8 py-1">Send Message</button>
 
                 </div>
 

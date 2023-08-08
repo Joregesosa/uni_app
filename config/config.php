@@ -18,8 +18,13 @@ if (isset($_SESSION['user'])) :
         case 2:
             $defoultController = "TeacherController";
             break;
+
+        case 3:
+            $defoultController = "StudentController";
+            break;
         default:
-            $defoultController = "SessionController";
+
+            header('location: ?controller=SessionController&action=logout');
             break;
 
     endswitch;
