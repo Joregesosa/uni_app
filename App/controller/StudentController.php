@@ -17,68 +17,74 @@ class StudentController
     function list_record()
     {
         if ($_SESSION['user']['role_id'] === 3) :
-            // $id = $_SESSION['user']['id'];
-            // $students = $this->admin->list("SELECT * FROM teacher_student_table WHERE teacher_id = $id");
+            $id = $_SESSION['user']['id'];
+
+            $students = $this->admin->list("SELECT * FROM student_subject_table WHERE student_id = $id");
 
             $this->title = 'Calificaciones';
             $this->view = 'student_list_record';
 
-        // return $students;
+            return $students;
 
         endif;
     }
 
-    // function edit_score()
-    // {
-    //     if ($_SESSION['user']['role_id'] === 2) :
+    function list_messages()
+    {
+        if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
 
-    //         $id = $_GET['record'];
+            $id = $_GET['record'];
 
-    //         $params = [$_POST['score'], $id];
+            $query = "SELECT * from messages WHERE subject_record_id=$id";
 
-    //         $query = "UPDATE subject_record set  `score` = ? Where `id` = ?";
+            $res = $this->admin->List($query);
 
-    //         $this->admin->Edit($query, $params);
+            return $res;
 
-    //         header('location: ?controller=teacherController&action=list_students');
+        endif;
+    }
 
-    //     endif;
-    // }
+    function send_message()
+    {
+        if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
 
-    // function list_messages()
-    // {
-    //     if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
+            $id = $_GET['record'];
+            $row = $_GET['row'];
+            $sender = $_SESSION['user']['id'];
 
-    //         $id = $_GET['record'];
+            $params = [$_POST['message'], $id, $sender];
 
-    //         $query = "SELECT * from messages WHERE subject_record_id=$id";
+            $query = "INSERT INTO messages (`message`, `subject_record_id`, `sender`) Values (?,?,?)";
 
-    //         $res = $this->admin->List($query);
-
-    //         return $res;
-
-    //     endif;
-    // }
-
-    // function send_message()
-    // {
-    //     if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
-
-    //         $id = $_GET['record'];
-    //         $row = $_GET['row'];
-    //         $sender = $_SESSION['user']['id'];
-
-    //         $params = [$_POST['message'], $id, $sender];
-
-    //         $query = "INSERT INTO messages (`message`, `subject_record_id`, `sender`) Values (?,?,?)";
-
-    //         $this->admin->Edit($query, $params);
+            $this->admin->Edit($query, $params);
 
 
 
-    //     header("location: ?controller=TeacherController&action=list_students&modal=messages&modal_act=list_messages&row=$row&record=$id");
+            header("location: ?controller=StudentController&action=list_record&modal=messages&modal_act=list_messages&row=$row&record=$id");
 
 
-    //     endif;
-    // }
+        endif;
+    }
+
+    function delete_record()
+    {
+        if ($_SESSION['user']['role_id'] === 2 || $_SESSION['user']['role_id'] === 3) :
+
+            $id = $_GET['record'];
+            $row = $_GET['row'];
+            $sender = $_SESSION['user']['id'];
+
+            $params = [$id];
+
+            $query = "DELETE FROM subjects_record where  id = ?";
+
+            $this->admin->Edit($query, $params);
+
+
+
+            header("location: ?controller=StudentController&action=list_record");
+
+
+        endif;
+    }
 }

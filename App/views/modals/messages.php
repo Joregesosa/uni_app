@@ -58,7 +58,6 @@
 
                 <div>
 
-                    <label for="email" class="text-xs">Correo Electronico</label>
 
                     <textarea placeholder="Escribe tu mensaje" name="message" id="message" class="resize-none outline-none p-3 w-full flex border h-20 rounded-md shadow-md shadow-cyan-950 bg-gray-200 text-gray-600"></textarea>
 
