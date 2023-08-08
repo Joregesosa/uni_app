@@ -1,3 +1,8 @@
+<?php
+    if($_SESSION['user']['role_id'] != 3){
+        header('location: index.php');
+    }
+?> 
 <div class=" w-[90%] mx-auto border-1 border-cyan-300 bg-slate-100 rounded-lg">
 
 

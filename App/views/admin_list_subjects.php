@@ -1,4 +1,9 @@
- <div class=" w-[90%] mx-auto border-1 border-cyan-300 bg-slate-100 rounded-lg">
+<?php
+    if($_SESSION['user']['role_id'] != 1){
+        header('location: index.php');
+    }
+?> 
+<div class=" w-[90%] mx-auto border-1 border-cyan-300 bg-slate-100 rounded-lg">
      <div class="flex w-full border-b border-cyan-300 px-4 items-center justify-between">
          <h4 class="w-fit   py-3 text-lg font-medium">
              Informacion de Clases

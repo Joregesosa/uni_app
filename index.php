@@ -64,5 +64,5 @@ else :
   }
 
 endif;
-
+print_r($_SERVER['REQUEST_URI']);
 require_once __DIR__ . "/App/views/components/footer.php";
